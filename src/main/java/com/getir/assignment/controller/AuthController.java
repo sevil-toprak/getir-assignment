@@ -7,13 +7,13 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import com.getir.assignment.controller.request.LoginRequest;
-import com.getir.assignment.controller.request.SignupRequest;
+import com.getir.assignment.controller.request.CreateCustomerRequest;
 import com.getir.assignment.controller.response.JwtResponse;
 import com.getir.assignment.controller.response.MessageResponse;
 import com.getir.assignment.domain.Role;
 import com.getir.assignment.domain.User;
 import com.getir.assignment.repository.RoleRepository;
-import com.getir.assignment.repository.UserRepository;
+import com.getir.assignment.repository.CustomerRepository;
 import com.getir.assignment.security.Roles;
 import com.getir.assignment.security.jwt.TokenProvider;
 import com.getir.assignment.security.service.UserDetailsImpl;
@@ -41,7 +41,7 @@ public class AuthController {
 
     AuthenticationManager authenticationManager;
 
-    UserRepository userRepository;
+    CustomerRepository userRepository;
 
     RoleRepository roleRepository;
 
@@ -49,7 +49,7 @@ public class AuthController {
 
     TokenProvider tokenProvider;
 
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository,
+    public AuthController(AuthenticationManager authenticationManager, CustomerRepository userRepository, RoleRepository roleRepository,
                           PasswordEncoder encoder, TokenProvider tokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
@@ -84,31 +84,31 @@ public class AuthController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            logger.debug("existsByUsername with username: {}", signUpRequest.getUsername());
+    public ResponseEntity<?> createCustomer(@Valid @RequestBody CreateCustomerRequest createCustomerRequest) {
+        if (userRepository.existsByUsername(createCustomerRequest.getUsername())) {
+            logger.debug("existsByUsername with username: {}", createCustomerRequest.getUsername());
 
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
 
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            logger.debug("existsByEmail with email: {}", signUpRequest.getEmail());
+        if (userRepository.existsByEmail(createCustomerRequest.getEmail())) {
+            logger.debug("existsByEmail with email: {}", createCustomerRequest.getEmail());
 
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
 
-        logger.debug("registerUser with username: {}", signUpRequest.getUsername());
+        logger.debug("registerUser with username: {}", createCustomerRequest.getUsername());
 
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
-                signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+        User user = new User(createCustomerRequest.getUsername(),
+                createCustomerRequest.getEmail(),
+                encoder.encode(createCustomerRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
+        Set<String> strRoles = createCustomerRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {

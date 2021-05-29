@@ -1,7 +1,7 @@
 package com.getir.assignment.security.service;
 
 import com.getir.assignment.domain.User;
-import com.getir.assignment.repository.UserRepository;
+import com.getir.assignment.repository.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,11 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final CustomerRepository userRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
-    public UserDetailsServiceImpl(UserRepository userRepository) {
+    public UserDetailsServiceImpl(CustomerRepository userRepository) {
         this.userRepository = userRepository;
     }
 
