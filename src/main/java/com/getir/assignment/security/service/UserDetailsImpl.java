@@ -1,7 +1,7 @@
 package com.getir.assignment.security.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.getir.assignment.domain.User;
+import com.getir.assignment.domain.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,7 +38,7 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
+    public static UserDetailsImpl build(Customer user) {
         logger.debug("userDetails with user id: {}", user.getId());
 
         List<GrantedAuthority> authorities = user.getRoles().stream()

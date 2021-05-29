@@ -11,8 +11,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "user")
-public class User {
+@Document(collection = "customer")
+public class Customer {
     @Id
     private String id;
 
@@ -32,10 +32,10 @@ public class User {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
-    public User() {
+    public Customer() {
     }
 
-    public User(String username, String email, String password) {
+    public Customer(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
