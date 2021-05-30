@@ -19,9 +19,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class OrderService {
@@ -56,49 +59,16 @@ public class OrderService {
             books.add(book);
         }
 
-//        for (Map.Entry map : mapBooks.entrySet()) {
-//            Book book = bookRepository.findById(map.getKey().toString()).orElseThrow(() -> new NotFoundException(map.getKey().toString()));
-//            book.setStock(Long.valueOf(map.getValue().toString()));
-//            books.add(book);
-//        }
-
-//        if (mapBooks != null) {
-//            mapBooks.forEach(book -> {
-//                books.add(bookRepository.findById(book).orElseThrow(() -> new NotFoundException(book)));
-//            });
-//        }
-
         Order order = new Order(orderCreateRequest.getCustomerId(),
                 books, Status.PROCESSING, new Date(), new Date());
 
         List<BookStockUpdateRequest> updateRequests = BookHelper.createBookStockUpdateRequests(order);
         for (BookStockUpdateRequest req : updateRequests) {
-            bookService.updateBookStock(req);
+            bookService.updateBookStockFromOrder(req);
         }
 
         statisticsService.addStatistics(StatisticsHelper.createStatisticRequest(order));
-
         return orderRepository.save(order);
-
-//        List<String> strBooks = orderCreateRequest.getBooks();
-//        List<Book> books = new ArrayList<>();
-//
-//        if (strBooks != null) {
-//            strBooks.forEach(book -> {
-//                books.add(bookRepository.findById(book).orElseThrow(() -> new NotFoundException(book)));
-//            });
-//        }
-//
-//        Order order = new Order(orderCreateRequest.getCustomerId(),
-//                books, Status.PROCESSING, new Date(), new Date());
-//
-//        Order createdOrder = orderRepository.save(order);
-//
-//        statisticsService.addStatistics(StatisticsHelper.createStatisticRequest(order));
-//
-//        //bookService.updateBookStock(BookHelper.createUpdateBookStockRequest(order));
-//
-//        return createdOrder;
     }
 
     public Order getOrderWithId(String orderId) {
@@ -113,6 +83,18 @@ public class OrderService {
         }
 
         return orderRepository.findAllBycustomerId(customerId, pageable);
+    }
+
+    public Page<Order> getAllOrdersWithDate(String startDate, String endDate, Pageable pageable) throws ParseException {
+//        Date from = new SimpleDateFormat("YY/MMM/d").parse(startDate.replace(".", "/"));
+//        Date to = new SimpleDateFormat("dd/MM/yyyy").parse(endDate.replace(".", "/"));
+
+        String pattern = "dd-M-yyyy hh:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        Date from = simpleDateFormat.parse(startDate.replace(".", "/"));
+        Date to = simpleDateFormat.parse(endDate.replace(".", "/"));
+
+        return orderRepository.getOrderByDate(from, to, pageable);
     }
 
     public Order updateOrderStatus(OrderStatusUpdateRequest orderStatusUpdateRequest) {

@@ -1,7 +1,5 @@
 package com.getir.assignment.controller.request;
 
-import com.getir.assignment.enums.Status;
-
 public class OrderStatusUpdateRequest {
     private String id;
 

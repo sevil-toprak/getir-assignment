@@ -19,7 +19,7 @@ public class StatisticsHelper {
 
         for (Book book : order.getBooks()) {
             bookCount += 1;
-            purchasedAmount.add(book.getPrice());
+            purchasedAmount = purchasedAmount.add(book.getPrice());
         }
 
         return new StatisticsCreateRequest(month, 1, bookCount, purchasedAmount);

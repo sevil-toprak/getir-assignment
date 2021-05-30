@@ -40,6 +40,8 @@ public class StatisticsService {
             int bookCount = updatedStatistics.getTotalBookCount();
             BigDecimal purchasedAmount = updatedStatistics.getTotalPurchasedAmount();
 
+            statistics.setId(updatedStatistics.getId());
+            statistics.setMonth(updatedStatistics.getMonth());
             statistics.setTotalOrderCount(orderCount + statisticsCreateRequest.getTotalOrderCount());
             statistics.setTotalBookCount(bookCount + statisticsCreateRequest.getTotalBookCount());
             statistics.setTotalPurchasedAmount(purchasedAmount.add(statisticsCreateRequest.getTotalPurchasedAmount()));

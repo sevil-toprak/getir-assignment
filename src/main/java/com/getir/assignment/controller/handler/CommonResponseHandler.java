@@ -28,7 +28,6 @@ public class CommonResponseHandler {
         map.put("data", null);
         map.put("status", HttpStatus.BAD_REQUEST);
         map.put("message", message);
-//        map.put("timeStamp", DateUtils.getSysDate());
         map.put("filedError", fieldError);
 
         return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
@@ -44,17 +43,6 @@ public class CommonResponseHandler {
         return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<Object> successResponse(String message) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("isSuccess", true);
-        map.put("data", null);
-        map.put("status", HttpStatus.OK);
-        map.put("message", message);
-//        map.put("timeStamp", DateUtils.getSysDate());
-//        map.put("filedError", fieldError);
-
-        return new ResponseEntity<Object>(map, HttpStatus.OK);
-    }
 }
 
 

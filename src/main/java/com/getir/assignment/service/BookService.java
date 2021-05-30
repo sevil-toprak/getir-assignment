@@ -67,12 +67,20 @@ public class BookService {
 
     public Book updateBookStock(BookStockUpdateRequest bookStockUpdateRequest) {
         Book book = bookRepository.findById(bookStockUpdateRequest.getId()).orElseThrow(() -> new NotFoundException(bookStockUpdateRequest.getId()));
-        Long newStock = book.getStock() - bookStockUpdateRequest.getStock();
+        book.setStock(bookStockUpdateRequest.getStock());
+
+        return bookRepository.save(book);
+    }
+
+    public Book updateBookStockFromOrder(BookStockUpdateRequest bookStockUpdateRequest) {
+        Book book = bookRepository.findById(bookStockUpdateRequest.getId()).orElseThrow(() -> new NotFoundException(bookStockUpdateRequest.getId()));
+        long newStock = book.getStock() - bookStockUpdateRequest.getStock();
         if(newStock < 0)
             throw new BookStockException(book.getId());
 
         book.setStock(newStock);
 
+        book.setStock(newStock);
         return bookRepository.save(book);
     }
 

@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("/api/order")
@@ -67,5 +68,12 @@ public class OrderController {
         return ResponseEntity.ok(order);
     }
 
+    @GetMapping("/date/{startDate}/{endDate}")
+    public ResponseEntity<Page<Order>> getAllOrdersWithDate(@PathVariable String startDate, @PathVariable String endDate, @PageableDefault(size = 20) Pageable pageable) throws ParseException {
+        Page<Order> orders = orderService.getAllOrdersWithDate(startDate, endDate, pageable);
+        logger.debug("Orders are returned with startDate: {} and endDate: {}", startDate, endDate);
+
+        return ResponseEntity.ok(orders);
+    }
 
 }
