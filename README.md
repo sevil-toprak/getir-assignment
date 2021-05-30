@@ -22,14 +22,14 @@ Mongo:
     - For authentication: /api/auth/login service can be used. This service returned a JWT token.
     - For new customer create: /api/auth/create service can be used.
     
-    - I shared Mongodb dump file in project folder, folder size is not big. 
+    - I shared Mongodb dump file in Drive folder.
     
 Docker:
-    - 
+    - docker-compose up -d
 
 Postman:
     - You can use Postman for Testing.
-    - I shared collection json file in project folder as GetirAssignmentApis.postman_collection.json.
+    - I shared collection json file in Drive folder as GetirAssignmentApis.postman_collection.json.
     - Also, you can be accessed from the link: https://www.getpostman.com/collections/3491dd03cac09f3b4225
 
 References: 
