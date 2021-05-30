@@ -2,17 +2,13 @@ package com.getir.assignment.service;
 
 import com.getir.assignment.controller.exception.AlreadyExistsException;
 import com.getir.assignment.controller.request.CreateCustomerRequest;
-import com.getir.assignment.controller.response.MessageResponse;
-import com.getir.assignment.domain.Book;
 import com.getir.assignment.domain.Customer;
 import com.getir.assignment.domain.Role;
-import com.getir.assignment.repository.BookRepository;
+import com.getir.assignment.enums.Roles;
 import com.getir.assignment.repository.CustomerRepository;
 import com.getir.assignment.repository.RoleRepository;
-import com.getir.assignment.security.Roles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +18,9 @@ import java.util.Set;
 @Service
 public class CustomerService {
     private final static Logger logger = LoggerFactory.getLogger(CustomerService.class);
-
-    private CustomerRepository customerRepository;
-
     RoleRepository roleRepository;
-
     PasswordEncoder encoder;
+    private CustomerRepository customerRepository;
 
     public CustomerService(CustomerRepository customerRepository, PasswordEncoder encoder, RoleRepository roleRepository) {
         this.customerRepository = customerRepository;

@@ -1,6 +1,6 @@
 package com.getir.assignment.domain;
 
-import com.getir.assignment.security.Roles;
+import com.getir.assignment.enums.Roles;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

@@ -4,7 +4,6 @@ import com.getir.assignment.controller.handler.CommonResponseHandler;
 import com.getir.assignment.controller.handler.ExceptionConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @ControllerAdvice
@@ -43,6 +41,11 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<?> notFoundException(NotFoundException ex) {
         return commonResponseHandler.errorResponse(String.format(ExceptionConstants.NOT_FOUND_EXCEPTION, ex.getEx()));
+    }
+
+    @ExceptionHandler(BookStockException.class)
+    public ResponseEntity<?> bookStockException(BookStockException ex) {
+        return commonResponseHandler.errorResponse(String.format(ExceptionConstants.BOOK_STOCK_EXCEPTION, ex.getEx()));
     }
 
 }

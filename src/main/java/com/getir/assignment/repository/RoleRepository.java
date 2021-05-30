@@ -1,7 +1,7 @@
 package com.getir.assignment.repository;
 
 import com.getir.assignment.domain.Role;
-import com.getir.assignment.security.Roles;
+import com.getir.assignment.enums.Roles;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

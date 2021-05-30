@@ -1,8 +1,10 @@
 package com.getir.assignment.service;
 
 import com.getir.assignment.controller.exception.AlreadyExistsException;
+import com.getir.assignment.controller.exception.BookStockException;
 import com.getir.assignment.controller.exception.NotFoundException;
 import com.getir.assignment.controller.request.BookCreateRequest;
+import com.getir.assignment.controller.request.BookStockUpdateRequest;
 import com.getir.assignment.controller.request.BookUpdateRequest;
 import com.getir.assignment.domain.Book;
 import com.getir.assignment.repository.BookRepository;
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class BookService {
     private final static Logger logger = LoggerFactory.getLogger(BookService.class);
 
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -30,7 +32,8 @@ public class BookService {
         Book book = new Book(bookCreateRequest.getName(),
                 bookCreateRequest.getAuthor_name(),
                 bookCreateRequest.getYear(),
-                bookCreateRequest.getPrice());
+                bookCreateRequest.getPrice(),
+                bookCreateRequest.getStock());
 
         return bookRepository.save(book);
     }
@@ -57,6 +60,18 @@ public class BookService {
         book.setAuthor_name(bookUpdateRequest.getAuthor_name());
         book.setYear(bookUpdateRequest.getYear());
         book.setPrice(bookUpdateRequest.getPrice());
+        book.setStock(bookUpdateRequest.getStock());
+
+        return bookRepository.save(book);
+    }
+
+    public Book updateBookStock(BookStockUpdateRequest bookStockUpdateRequest) {
+        Book book = bookRepository.findById(bookStockUpdateRequest.getId()).orElseThrow(() -> new NotFoundException(bookStockUpdateRequest.getId()));
+        Long newStock = book.getStock() - bookStockUpdateRequest.getStock();
+        if(newStock < 0)
+            throw new BookStockException(book.getId());
+
+        book.setStock(newStock);
 
         return bookRepository.save(book);
     }

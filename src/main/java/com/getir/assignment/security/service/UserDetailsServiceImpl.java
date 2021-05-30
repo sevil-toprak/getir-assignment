@@ -13,9 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final CustomerRepository customerRepository;
-
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+    private final CustomerRepository customerRepository;
 
     public UserDetailsServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;

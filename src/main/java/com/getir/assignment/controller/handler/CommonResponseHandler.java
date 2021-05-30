@@ -12,17 +12,17 @@ import java.util.Map;
 
 @Component
 public class CommonResponseHandler {
-    public Map<String,Object> getFieldErrorResponse(BindingResult result){
+    public Map<String, Object> getFieldErrorResponse(BindingResult result) {
 
         Map<String, Object> fieldError = new HashMap<>();
-        List<FieldError> errors= result.getFieldErrors();
+        List<FieldError> errors = result.getFieldErrors();
         for (FieldError error : errors) {
             fieldError.put(error.getField(), error.getDefaultMessage());
         }
         return fieldError;
     }
 
-    public ResponseEntity<Object> errorResponseInvalidDataException(String message, Object fieldError){
+    public ResponseEntity<Object> errorResponseInvalidDataException(String message, Object fieldError) {
         Map<String, Object> map = new HashMap<>();
         map.put("isSuccess", false);
         map.put("data", null);
@@ -34,7 +34,7 @@ public class CommonResponseHandler {
         return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<Object> errorResponse(String message){
+    public ResponseEntity<Object> errorResponse(String message) {
         Map<String, Object> map = new HashMap<>();
         map.put("isSuccess", false);
         map.put("data", null);
@@ -44,7 +44,7 @@ public class CommonResponseHandler {
         return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
     }
 
-    public ResponseEntity<Object> successResponse(String message){
+    public ResponseEntity<Object> successResponse(String message) {
         Map<String, Object> map = new HashMap<>();
         map.put("isSuccess", true);
         map.put("data", null);

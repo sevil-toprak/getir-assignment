@@ -1,4 +1,4 @@
-package com.getir.assignment.security;
+package com.getir.assignment.enums;
 
 public enum Roles {
     ROLE_USER,

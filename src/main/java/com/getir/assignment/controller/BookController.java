@@ -2,6 +2,7 @@ package com.getir.assignment.controller;
 
 import com.getir.assignment.controller.exception.InvalidDataException;
 import com.getir.assignment.controller.request.BookCreateRequest;
+import com.getir.assignment.controller.request.BookStockUpdateRequest;
 import com.getir.assignment.controller.request.BookUpdateRequest;
 import com.getir.assignment.domain.Book;
 import com.getir.assignment.service.BookService;
@@ -21,7 +22,7 @@ import javax.validation.Valid;
 public class BookController {
     private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 
-    private BookService bookService;
+    private final BookService bookService;
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
@@ -38,16 +39,6 @@ public class BookController {
 
         return ResponseEntity.ok(book);
     }
-
-//    @GetMapping("/")
-//    public ResponseEntity<Book> getBookWithId(@RequestParam String bookId) {
-//        if (bookId == null) {
-//            throw new NullPointerException();
-//        }
-//
-//        Book book = bookService.getBookWithId(bookId);
-//        return ResponseEntity.ok(book);
-//    }
 
     @GetMapping("/{bookId}")
     public ResponseEntity<Book> getBookWithId(@PathVariable String bookId) {
@@ -81,6 +72,17 @@ public class BookController {
 
         Book book = bookService.updateBook(bookUpdateRequest);
         logger.debug("Book is updated with id: {}", book.getId());
+        return ResponseEntity.ok(book);
+    }
+
+    @PutMapping("/updateStock")
+    private ResponseEntity<Book> updateBookStock(@Valid @RequestBody BookStockUpdateRequest bookStockUpdateRequest, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new InvalidDataException(bindingResult);
+        }
+
+        Book book = bookService.updateBookStock(bookStockUpdateRequest);
+        logger.debug("Book stock is updated with id: {} and stock", book.getId(), book.getStock());
         return ResponseEntity.ok(book);
     }
 

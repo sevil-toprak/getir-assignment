@@ -27,6 +27,9 @@ public class BookUpdateRequest {
     @NotNull(message = "Price is mandotory field!")
     private BigDecimal price;
 
+    @NotNull(message = "Stock is mandotory field!")
+    private Long stock;
+
     public String getId() {
         return id;
     }
@@ -65,5 +68,13 @@ public class BookUpdateRequest {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Long getStock() {
+        return stock;
+    }
+
+    public void setStock(Long stock) {
+        this.stock = stock;
     }
 }

@@ -1,6 +1,8 @@
 package com.getir.assignment.controller.request;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
 public class BookCreateRequest {
@@ -18,6 +20,9 @@ public class BookCreateRequest {
 
     @NotNull(message = "Price is mandotory field!")
     private BigDecimal price;
+
+    @NotNull(message = "Stock is mandotory field!")
+    private Long stock;
 
     public String getName() {
         return name;
@@ -49,5 +54,13 @@ public class BookCreateRequest {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Long getStock() {
+        return stock;
+    }
+
+    public void setStock(Long stock) {
+        this.stock = stock;
     }
 }

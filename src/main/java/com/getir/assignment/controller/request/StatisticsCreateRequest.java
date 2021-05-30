@@ -1,14 +1,8 @@
-package com.getir.assignment.domain;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+package com.getir.assignment.controller.request;
 
 import java.math.BigDecimal;
 
-@Document(collection = "statistics")
-public class Statistics {
-    @Id
-    private String id;
+public class StatisticsCreateRequest {
 
     private int month;
 
@@ -18,23 +12,11 @@ public class Statistics {
 
     private BigDecimal totalPurchasedAmount;
 
-    public Statistics() {
-
-    }
-
-    public Statistics(int month, int totalOrderCount, int totalBookCount, BigDecimal totalPurchasedAmount) {
+    public StatisticsCreateRequest(int month, int totalOrderCount, int totalBookCount, BigDecimal totalPurchasedAmount) {
         this.month = month;
         this.totalOrderCount = totalOrderCount;
         this.totalBookCount = totalBookCount;
         this.totalPurchasedAmount = totalPurchasedAmount;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public int getMonth() {
